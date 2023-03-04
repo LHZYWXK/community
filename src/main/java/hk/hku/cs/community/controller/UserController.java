@@ -1,5 +1,6 @@
 package hk.hku.cs.community.controller;
 
+import hk.hku.cs.community.annotation.LoginRequired;
 import hk.hku.cs.community.entity.User;
 import hk.hku.cs.community.service.UserService;
 import hk.hku.cs.community.utils.CommunityUtils;
@@ -43,11 +44,13 @@ public class UserController {
     @Autowired
     private HostHolder hostHolder;
 
+    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
     }
 
+    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
