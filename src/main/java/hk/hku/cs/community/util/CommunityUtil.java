@@ -1,4 +1,4 @@
-package hk.hku.cs.community.utils;
+package hk.hku.cs.community.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -7,7 +7,7 @@ import org.springframework.util.DigestUtils;
 import java.util.Map;
 import java.util.UUID;
 
-public class CommunityUtils {
+public class CommunityUtil {
     /**
      * 生成随机字符串
      *

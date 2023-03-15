@@ -1,9 +1,9 @@
-package hk.hku.cs.community.utils;
+package hk.hku.cs.community.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-public class CookieUtils {
+public class CookieUtil {
     public static String getValue(HttpServletRequest request, String name) {
         if (request == null || name == null) {
             throw new IllegalArgumentException("参数不能为空！");

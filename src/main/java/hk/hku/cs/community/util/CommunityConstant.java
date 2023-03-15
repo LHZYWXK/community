@@ -1,4 +1,4 @@
-package hk.hku.cs.community.utils;
+package hk.hku.cs.community.util;
 
 public interface CommunityConstant {
     int ACTIVATION_SUCCESS = 0;
@@ -8,4 +8,5 @@ public interface CommunityConstant {
     int REMEMBER_EXPIRED_SECONDS = 3600 * 24 * 100;
     int ENTITY_TYPE_POST = 1;
     int ENTITY_TYPE_COMMENT = 2;
+    int ENTITY_TYPE_USER = 3;
 }

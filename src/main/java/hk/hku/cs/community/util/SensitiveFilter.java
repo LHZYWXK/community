@@ -1,4 +1,4 @@
-package hk.hku.cs.community.utils;
+package hk.hku.cs.community.util;
 
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;

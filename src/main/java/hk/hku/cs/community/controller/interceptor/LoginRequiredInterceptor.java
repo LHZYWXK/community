@@ -1,7 +1,7 @@
 package hk.hku.cs.community.controller.interceptor;
 
 import hk.hku.cs.community.annotation.LoginRequired;
-import hk.hku.cs.community.utils.HostHolder;
+import hk.hku.cs.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

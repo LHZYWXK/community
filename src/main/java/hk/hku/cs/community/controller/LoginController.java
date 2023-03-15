@@ -3,9 +3,9 @@ package hk.hku.cs.community.controller;
 import com.google.code.kaptcha.Producer;
 import hk.hku.cs.community.entity.User;
 import hk.hku.cs.community.service.UserService;
-import hk.hku.cs.community.utils.CommunityConstant;
-import hk.hku.cs.community.utils.CommunityUtils;
-import hk.hku.cs.community.utils.MailClient;
+import hk.hku.cs.community.util.CommunityConstant;
+import hk.hku.cs.community.util.CommunityUtil;
+import hk.hku.cs.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,13 +152,13 @@ public class LoginController implements CommunityConstant {
     @ResponseBody
     public String getForgetCode(String email, HttpSession session) {
         if (StringUtils.isBlank(email)) {
-            return CommunityUtils.getJSONString(1, "邮箱不能为空！");
+            return CommunityUtil.getJSONString(1, "邮箱不能为空！");
         }
 
         // 发送邮件
         Context context = new Context();
         context.setVariable("email", email);
-        String code = CommunityUtils.generateUUID().substring(0, 4);
+        String code = CommunityUtil.generateUUID().substring(0, 4);
         context.setVariable("verifyCode", code);
         String content = templateEngine.process("/mail/forget", context);
         mailClient.sendMail(email, "找回密码", content);
@@ -166,7 +166,7 @@ public class LoginController implements CommunityConstant {
         // 保存验证码
         session.setAttribute("verifyCode", code);
 
-        return CommunityUtils.getJSONString(0);
+        return CommunityUtil.getJSONString(0);
     }
 
     // 重置密码

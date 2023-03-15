@@ -2,12 +2,11 @@ package hk.hku.cs.community.service;
 
 import hk.hku.cs.community.dao.MessageMapper;
 import hk.hku.cs.community.entity.Message;
-import hk.hku.cs.community.utils.SensitiveFilter;
+import hk.hku.cs.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service

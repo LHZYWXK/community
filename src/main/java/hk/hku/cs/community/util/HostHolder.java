@@ -1,4 +1,4 @@
-package hk.hku.cs.community.utils;
+package hk.hku.cs.community.util;
 
 import hk.hku.cs.community.entity.User;
 import org.springframework.stereotype.Component;

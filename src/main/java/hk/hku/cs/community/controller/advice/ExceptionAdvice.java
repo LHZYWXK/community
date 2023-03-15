@@ -1,6 +1,6 @@
 package hk.hku.cs.community.controller.advice;
 
-import hk.hku.cs.community.utils.CommunityUtils;
+import hk.hku.cs.community.util.CommunityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class ExceptionAdvice {
         if ("XMLHttpRequest".equals(xRequestedWith)) {
             response.setContentType("application/plain;charset=utf-8");
             PrintWriter writer = response.getWriter();
-            writer.write(CommunityUtils.getJSONString(1, "服务器异常！"));
+            writer.write(CommunityUtil.getJSONString(1, "服务器异常！"));
         } else {
             response.sendRedirect(request.getContextPath() + "/error");
         }

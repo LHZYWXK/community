@@ -3,8 +3,8 @@ package hk.hku.cs.community.controller.interceptor;
 import hk.hku.cs.community.entity.LoginTicket;
 import hk.hku.cs.community.entity.User;
 import hk.hku.cs.community.service.UserService;
-import hk.hku.cs.community.utils.CookieUtils;
-import hk.hku.cs.community.utils.HostHolder;
+import hk.hku.cs.community.util.CookieUtil;
+import hk.hku.cs.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,7 +25,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 从 cookie 获取凭证
-        String ticket = CookieUtils.getValue(request, "ticket");
+        String ticket = CookieUtil.getValue(request, "ticket");
         if (ticket != null) {
             // 查询凭证
             LoginTicket loginTicket = userService.findLoginTicket(ticket);

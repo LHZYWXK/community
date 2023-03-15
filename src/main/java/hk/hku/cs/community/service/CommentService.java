@@ -1,10 +1,9 @@
 package hk.hku.cs.community.service;
 
 import hk.hku.cs.community.dao.CommentMapper;
-import hk.hku.cs.community.dao.DiscussPostMapper;
 import hk.hku.cs.community.entity.Comment;
-import hk.hku.cs.community.utils.CommunityConstant;
-import hk.hku.cs.community.utils.SensitiveFilter;
+import hk.hku.cs.community.util.CommunityConstant;
+import hk.hku.cs.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -51,6 +50,18 @@ public class CommentService implements CommunityConstant {
         }
 
         return rows;
+    }
+
+    public Comment findCommentById(int id) {
+        return commentMapper.selectCommentById(id);
+    }
+
+    public List<Comment> findUserComments(int userId, int offset, int limit) {
+        return commentMapper.selectCommentsByUser(userId, offset, limit);
+    }
+
+    public int findUserCount(int userId) {
+        return commentMapper.selectCountByUser(userId);
     }
 
 

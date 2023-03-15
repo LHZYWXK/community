@@ -2,7 +2,7 @@ package hk.hku.cs.community.controller;
 
 import hk.hku.cs.community.entity.Comment;
 import hk.hku.cs.community.service.CommentService;
-import hk.hku.cs.community.utils.HostHolder;
+import hk.hku.cs.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

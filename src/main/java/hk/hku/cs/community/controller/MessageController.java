@@ -5,8 +5,8 @@ import hk.hku.cs.community.entity.Page;
 import hk.hku.cs.community.entity.User;
 import hk.hku.cs.community.service.MessageService;
 import hk.hku.cs.community.service.UserService;
-import hk.hku.cs.community.utils.CommunityUtils;
-import hk.hku.cs.community.utils.HostHolder;
+import hk.hku.cs.community.util.CommunityUtil;
+import hk.hku.cs.community.util.HostHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +121,7 @@ public class MessageController {
     public String sendLetter(String toName, String content) {
         User target = userService.findUserByName(toName);
         if (target == null) {
-            return CommunityUtils.getJSONString(1, "目标用户不存在！");
+            return CommunityUtil.getJSONString(1, "目标用户不存在！");
         }
         Message message = new Message();
         message.setFromId(hostHolder.getUser().getId());
@@ -135,13 +135,13 @@ public class MessageController {
         message.setCreateTime(new Date());
         messageService.addMessage(message);
 
-        return CommunityUtils.getJSONString(0);
+        return CommunityUtil.getJSONString(0);
     }
 
     @RequestMapping(path = "/letter/delete", method = RequestMethod.POST)
     @ResponseBody
     public String deleteLetter(int id) {
         messageService.deleteMessage(id);
-        return CommunityUtils.getJSONString(0);
+        return CommunityUtil.getJSONString(0);
     }
 }

@@ -4,9 +4,9 @@ import hk.hku.cs.community.dao.LoginTicketMapper;
 import hk.hku.cs.community.dao.UserMapper;
 import hk.hku.cs.community.entity.LoginTicket;
 import hk.hku.cs.community.entity.User;
-import hk.hku.cs.community.utils.CommunityConstant;
-import hk.hku.cs.community.utils.CommunityUtils;
-import hk.hku.cs.community.utils.MailClient;
+import hk.hku.cs.community.util.CommunityConstant;
+import hk.hku.cs.community.util.CommunityUtil;
+import hk.hku.cs.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -82,11 +82,11 @@ public class UserService implements CommunityConstant {
         }
 
         // 注册用户
-        user.setSalt(CommunityUtils.generateUUID().substring(0, 5));
-        user.setPassword(CommunityUtils.md5(user.getPassword() + user.getSalt()));
+        user.setSalt(CommunityUtil.generateUUID().substring(0, 5));
+        user.setPassword(CommunityUtil.md5(user.getPassword() + user.getSalt()));
         user.setType(0);
         user.setStatus(0);
-        user.setActivationCode(CommunityUtils.generateUUID());
+        user.setActivationCode(CommunityUtil.generateUUID());
         user.setHeaderUrl(String.format("https://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000)));
         user.setCreateTime(new Date());
         userMapper.insertUser(user);
@@ -142,7 +142,7 @@ public class UserService implements CommunityConstant {
             return map;
         }
         // 验证密码
-        password = CommunityUtils.md5(password + user.getSalt());
+        password = CommunityUtil.md5(password + user.getSalt());
         if (!user.getPassword().equals(password)) {
             map.put("passwordMsg", "密码不正确！");
             return map;
@@ -151,7 +151,7 @@ public class UserService implements CommunityConstant {
         // 生成登陆凭证
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(user.getId());
-        loginTicket.setTicket(CommunityUtils.generateUUID());
+        loginTicket.setTicket(CommunityUtil.generateUUID());
         loginTicket.setStatus(0);
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
         loginTicketMapper.insertLoginTicket(loginTicket);
@@ -182,7 +182,7 @@ public class UserService implements CommunityConstant {
         }
 
         // 重置密码
-        password = CommunityUtils.md5(password + user.getSalt());
+        password = CommunityUtil.md5(password + user.getSalt());
         userMapper.updatePassword(user.getId(), password);
 
         map.put("user", user);
@@ -217,14 +217,14 @@ public class UserService implements CommunityConstant {
 
         // 验证原始密码
         User user = userMapper.selectById(userId);
-        oldPassword = CommunityUtils.md5(oldPassword + user.getSalt());
+        oldPassword = CommunityUtil.md5(oldPassword + user.getSalt());
         if (!user.getPassword().equals(oldPassword)) {
             map.put("oldPasswordMsg", "原密码输入有误!");
             return map;
         }
 
         // 更新密码
-        newPassword = CommunityUtils.md5(newPassword + user.getSalt());
+        newPassword = CommunityUtil.md5(newPassword + user.getSalt());
         userMapper.updatePassword(userId, newPassword);
 
         return map;

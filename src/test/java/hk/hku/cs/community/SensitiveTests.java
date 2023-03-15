@@ -1,6 +1,6 @@
 package hk.hku.cs.community;
 
-import hk.hku.cs.community.utils.SensitiveFilter;
+import hk.hku.cs.community.util.SensitiveFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

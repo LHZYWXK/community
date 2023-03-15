@@ -2,7 +2,7 @@ package hk.hku.cs.community.service;
 
 import hk.hku.cs.community.dao.DiscussPostMapper;
 import hk.hku.cs.community.entity.DiscussPost;
-import hk.hku.cs.community.utils.SensitiveFilter;
+import hk.hku.cs.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
