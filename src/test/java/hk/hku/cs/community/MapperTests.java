@@ -2,9 +2,11 @@ package hk.hku.cs.community;
 
 import hk.hku.cs.community.dao.DiscussPostMapper;
 import hk.hku.cs.community.dao.LoginTicketMapper;
+import hk.hku.cs.community.dao.MessageMapper;
 import hk.hku.cs.community.dao.UserMapper;
 import hk.hku.cs.community.entity.DiscussPost;
 import hk.hku.cs.community.entity.LoginTicket;
+import hk.hku.cs.community.entity.Message;
 import hk.hku.cs.community.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class MapperTests {
 
     @Autowired
     private LoginTicketMapper loginTicketMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Test
     public void testSelectUser() {
@@ -94,4 +98,21 @@ public class MapperTests {
         System.out.println(loginTicket);
     }
 
+    @Test
+    public void testSelectLetters() {
+        List<Message> list = messageMapper.selectConversations(111, 0, 20);
+        list.forEach(System.out::println);
+
+        int count = messageMapper.selectConversationCount(111);
+        System.out.println(count);
+
+        list = messageMapper.selectLetters("111_112", 0, 10);
+        list.forEach(System.out::println);
+
+        count = messageMapper.selectLetterCount("111_112");
+        System.out.println(count);
+
+        count = messageMapper.selectLetterUnreadCount(131, "111_131");
+        System.out.println(count);
+    }
 }
