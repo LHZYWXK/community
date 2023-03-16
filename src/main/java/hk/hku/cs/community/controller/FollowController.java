@@ -1,7 +1,9 @@
 package hk.hku.cs.community.controller;
 
+import hk.hku.cs.community.entity.Event;
 import hk.hku.cs.community.entity.Page;
 import hk.hku.cs.community.entity.User;
+import hk.hku.cs.community.event.EventProducer;
 import hk.hku.cs.community.service.FollowService;
 import hk.hku.cs.community.service.UserService;
 import hk.hku.cs.community.util.CommunityConstant;
@@ -28,6 +30,8 @@ public class FollowController implements CommunityConstant {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EventProducer eventProducer;
 
     private boolean hasFollowed(int userId) {
         if (hostHolder.getUser() == null) {
@@ -41,6 +45,17 @@ public class FollowController implements CommunityConstant {
     public String follow(int entityType, int entityId) {
         User user = hostHolder.getUser();
         followService.follow(user.getId(), entityType, entityId);
+
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+
+        eventProducer.fireEvent(event);
+
         return CommunityUtil.getJSONString(0, "已关注!");
     }
 
