@@ -1,9 +1,7 @@
 package hk.hku.cs.community.controller;
 
-import hk.hku.cs.community.entity.Comment;
-import hk.hku.cs.community.entity.DiscussPost;
-import hk.hku.cs.community.entity.Page;
-import hk.hku.cs.community.entity.User;
+import hk.hku.cs.community.entity.*;
+import hk.hku.cs.community.event.EventProducer;
 import hk.hku.cs.community.service.CommentService;
 import hk.hku.cs.community.service.DiscussPostService;
 import hk.hku.cs.community.service.LikeService;
@@ -39,6 +37,9 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String addDiscussPost(String title, String content) {
@@ -47,13 +48,21 @@ public class DiscussPostController implements CommunityConstant {
             return CommunityUtil.getJSONString(403, "您还没有登陆！");
         }
 
-        DiscussPost discussPost = new DiscussPost();
-        discussPost.setUserId(user.getId());
-        discussPost.setTitle(title);
-        discussPost.setContent(content);
-        discussPost.setCreateTime(new Date());
+        DiscussPost post = new DiscussPost();
+        post.setUserId(user.getId());
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCreateTime(new Date());
 
-        discussPostService.addDiscussPost(discussPost);
+        discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "发布成功！");
     }
