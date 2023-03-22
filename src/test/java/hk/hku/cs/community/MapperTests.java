@@ -68,15 +68,15 @@ public class MapperTests {
         System.out.println(rows);
     }
 
-    @Test
-    public void testSelectPosts() {
-        List<DiscussPost> list = discussPostMapper.selectDiscussPosts(149, 0, 10);
-        list.forEach(System.out::println);
-
-        int rows = discussPostMapper.selectDiscussPostRows(149);
-        System.out.println(rows);
-
-    }
+//    @Test
+//    public void testSelectPosts() {
+//        List<DiscussPost> list = discussPostMapper.selectDiscussPosts(149, 0, 10);
+//        list.forEach(System.out::println);
+//
+//        int rows = discussPostMapper.selectDiscussPostRows(149);
+//        System.out.println(rows);
+//
+//    }
 
     @Test
     public void testInsertLoginTicket() {

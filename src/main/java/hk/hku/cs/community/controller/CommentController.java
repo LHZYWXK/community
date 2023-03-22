@@ -8,7 +8,9 @@ import hk.hku.cs.community.service.CommentService;
 import hk.hku.cs.community.service.DiscussPostService;
 import hk.hku.cs.community.util.CommunityConstant;
 import hk.hku.cs.community.util.HostHolder;
+import hk.hku.cs.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,9 @@ public class CommentController implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @RequestMapping(path = "/add/{discussPostId}", method = RequestMethod.POST)
     public String addComment(@PathVariable("discussPostId") int discussPostId, Comment comment) {
         comment.setUserId(hostHolder.getUser().getId());
@@ -49,7 +54,7 @@ public class CommentController implements CommunityConstant {
         if (comment.getEntityType() == ENTITY_TYPE_POST) {
             DiscussPost target = discussPostService.findDiscussPostById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
-        } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT){
+        } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {
             Comment target = commentService.findCommentById(comment.getId());
             event.setEntityUserId(target.getUserId());
         }
@@ -64,6 +69,9 @@ public class CommentController implements CommunityConstant {
                     .setEntityType(ENTITY_TYPE_POST)
                     .setEntityId(discussPostId);
             eventProducer.fireEvent(event);
+            // 计算帖子分数
+            String redisKey = RedisKeyUtil.getPostScore();
+            redisTemplate.opsForSet().add(redisKey, discussPostId);
         }
 
         return "redirect:/discuss/detail/" + discussPostId;
